@@ -478,8 +478,13 @@ export default {
       }
     },
     logout() {
-      // Implementation for logout
-      this.$router.push('/');
+      // Use the provided logout method from app
+      if (this.$logout) {
+        this.$logout();
+      } else {
+        // Fallback
+        window.location.reload();
+      }
     }
   }
 }

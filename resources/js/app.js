@@ -1,5 +1,4 @@
 import { createApp } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
 import Echo from 'laravel-echo';
 import Pusher from 'pusher-js';
 import axios from 'axios';
@@ -42,34 +41,28 @@ try {
     console.error('Echo initialization failed:', error);
 }
 
-// Router configuration
-const routes = [
-    { path: '/', name: 'login', component: Login },
-    { path: '/owner', name: 'owner', component: OwnerDashboard },
-    { path: '/reception', name: 'reception', component: ReceptionDashboard },
-    { path: '/waiter', name: 'waiter', component: WaiterDashboard },
-    { path: '/kitchen', name: 'kitchen', component: KitchenDashboard },
-    { path: '/tables', name: 'tables', component: TableLayout },
-    { path: '/orders', name: 'orders', component: OrderManagement },
-    { path: '/inventory', name: 'inventory', component: InventoryManagement },
-];
-
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-});
-
 // Simple toast notification system
 const toast = {
-    success: (message) => console.log('✅ Success:', message),
-    error: (message) => console.error('❌ Error:', message),
-    info: (message) => console.log('ℹ️ Info:', message)
+    success: (message) => {
+        console.log('✅ Success:', message);
+        // You can replace this with a proper toast notification library later
+        alert('Success: ' + message);
+    },
+    error: (message) => {
+        console.error('❌ Error:', message);
+        alert('Error: ' + message);
+    },
+    info: (message) => {
+        console.log('ℹ️ Info:', message);
+        alert('Info: ' + message);
+    }
 };
 
 // Create Vue app
 const app = createApp({
     data() {
         return {
+            currentView: 'login', // login, owner, reception, waiter, kitchen
             user: null,
             notifications: [],
             isConnected: false
@@ -85,9 +78,43 @@ const app = createApp({
             try {
                 const response = await axios.get('/api/user');
                 this.user = response.data;
+                // Auto-navigate based on user role if already logged in
+                if (this.user) {
+                    this.navigateToUserDashboard(this.user.role);
+                }
             } catch (error) {
-                console.error('Failed to load user:', error);
+                console.log('User not logged in');
+                this.currentView = 'login';
             }
+        },
+        navigateToUserDashboard(role) {
+            switch (role) {
+                case 'owner':
+                case 'superadmin':
+                    this.currentView = 'owner';
+                    break;
+                case 'reception':
+                    this.currentView = 'reception';
+                    break;
+                case 'waiter':
+                    this.currentView = 'waiter';
+                    break;
+                case 'kitchen':
+                    this.currentView = 'kitchen';
+                    break;
+                default:
+                    this.currentView = 'login';
+            }
+        },
+        onLoginSuccess(user) {
+            this.user = user;
+            this.navigateToUserDashboard(user.role);
+        },
+        logout() {
+            this.user = null;
+            this.currentView = 'login';
+            localStorage.removeItem('auth_token');
+            delete axios.defaults.headers.common['Authorization'];
         },
         setupRealTimeListeners() {
             if (window.Echo) {
@@ -118,16 +145,20 @@ const app = createApp({
             }
         },
         handleOrderCreated(event) {
-            this.$emit('order-created', event.order);
+            console.log('Order created:', event.order);
+            toast.info(`New order #${event.order.id} created`);
         },
         handleOrderUpdated(event) {
-            this.$emit('order-updated', event.order);
+            console.log('Order updated:', event.order);
+            toast.info(`Order #${event.order.id} updated`);
         },
         handleInventoryUpdated(event) {
-            this.$emit('inventory-updated', event.item);
+            console.log('Inventory updated:', event.item);
+            toast.info(`Inventory item ${event.item.name} updated`);
         },
         handleTableStatusChanged(event) {
-            this.$emit('table-status-changed', event.table);
+            console.log('Table status changed:', event.table);
+            toast.info(`Table ${event.table.name} status changed`);
         }
     },
     provide() {
@@ -135,7 +166,9 @@ const app = createApp({
             $echo: window.Echo,
             $user: this.user,
             $http: axios,
-            $toast: toast
+            $toast: toast,
+            $navigate: this.navigateToUserDashboard,
+            $logout: this.logout
         }
     }
 });
@@ -152,8 +185,7 @@ app.component('kitchen-dashboard', KitchenDashboard);
 app.component('table-layout', TableLayout);
 app.component('order-management', OrderManagement);
 app.component('inventory-management', InventoryManagement);
-
-app.use(router);
+app.component('login', Login);
 
 // Mount the app
 const appElement = document.getElementById('app');
