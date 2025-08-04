@@ -5,10 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     protected $fillable = [
         'name',
@@ -36,6 +37,11 @@ class User extends Authenticatable
         return $this->role === 'superadmin';
     }
 
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
+    }
+
     public function isReception(): bool
     {
         return $this->role === 'reception';
@@ -46,18 +52,23 @@ class User extends Authenticatable
         return $this->role === 'waiter';
     }
 
+    public function isKitchen(): bool
+    {
+        return $this->role === 'kitchen';
+    }
+
     public function ordersTaken() // As waiter
-{
-    return $this->hasMany(Order::class, 'user_id');
-}
+    {
+        return $this->hasMany(Order::class, 'user_id');
+    }
 
-public function kitchenPrints()
-{
-    return $this->hasMany(KitchenPrint::class, 'user_id');
-}
+    public function kitchenPrints()
+    {
+        return $this->hasMany(KitchenPrint::class, 'user_id');
+    }
 
-public function notifications()
-{
-    return $this->hasMany(Notification::class, 'user_id')->orderBy('created_at', 'desc');
-}
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class, 'user_id')->orderBy('created_at', 'desc');
+    }
 }

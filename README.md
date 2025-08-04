@@ -1,61 +1,251 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Restaurant Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive Vue.js + Laravel restaurant management system with real-time features, role-based access control, and dynamic inventory management.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Multi-Role Access System
+- **Owner/Admin Dashboard**: Analytics, staff management, reports, inventory oversight
+- **Reception Dashboard**: Real-time monitoring, billing, customer management
+- **Waiter Interface**: Table management, order taking, menu browsing
+- **Kitchen Dashboard**: Order queue management, preparation tracking, real-time updates
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Real-Time Features
+- Live order status updates across all interfaces
+- Real-time table status changes
+- Instant notifications for new orders and updates
+- Kitchen order queue with preparation time tracking
+- Live inventory alerts for low stock items
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Core Functionality
+- **Table Management**: Visual table layout, assignment, and status tracking
+- **Order Management**: Complete order lifecycle from creation to completion
+- **Menu Management**: Categories, items, pricing, and availability
+- **Inventory Tracking**: Stock levels, usage tracking, supplier management
+- **Billing System**: Invoice generation and payment processing
+- **Reporting**: Sales analytics, staff performance, inventory reports
 
-## Learning Laravel
+## Technology Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Frontend
+- **Vue.js 3** with Composition API
+- **Vue Router 4** for SPA navigation
+- **Tailwind CSS** for modern UI styling
+- **Axios** for API communication
+- **Laravel Echo** + **Pusher** for real-time features
+- **Moment.js** for date/time handling
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Backend
+- **Laravel 12** with modern PHP 8.2+ features
+- **Laravel Sanctum** for API authentication
+- **Laravel Reverb** for WebSocket broadcasting
+- **MySQL** database with optimized relationships
+- **Event-driven architecture** for real-time updates
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Quick Start
 
-## Laravel Sponsors
+### Prerequisites
+- PHP 8.2+
+- Node.js 18+
+- MySQL 8.0+
+- Composer
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### Installation
 
-### Premium Partners
+1. **Clone and Setup**
+```bash
+git clone <repository-url>
+cd restaurant-management
+composer install
+npm install
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+2. **Environment Configuration**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+3. **Database Setup**
+```bash
+php artisan migrate
+php artisan db:seed
+```
+
+4. **Build Frontend**
+```bash
+npm run build
+# or for development
+npm run dev
+```
+
+5. **Start Services**
+```bash
+# Terminal 1: Laravel Server
+php artisan serve
+
+# Terminal 2: WebSocket Server
+php artisan reverb:start
+
+# Terminal 3: Queue Worker (for background jobs)
+php artisan queue:work
+```
+
+## User Roles & Access
+
+### Default Login Credentials
+
+**Owner/Admin**
+- Email: admin@restaurant.com
+- Password: password
+- Access: Full system control, analytics, staff management
+
+**Reception**
+- Email: reception@restaurant.com
+- Password: password
+- Access: Orders monitoring, billing, customer management
+
+**Waiter**
+- Email: waiter@restaurant.com
+- Password: password
+- Access: Table assignment, order taking, menu management
+
+**Kitchen**
+- Email: kitchen@restaurant.com
+- Password: password
+- Access: Order preparation, status updates, kitchen notes
+
+## API Endpoints
+
+### Authentication
+- `POST /api/login` - User authentication
+- `POST /api/logout` - User logout
+- `GET /api/user` - Current user info
+
+### Waiter Routes
+- `GET /api/waiter/tables` - Get all tables with status
+- `GET /api/waiter/orders` - Get waiter's active orders
+- `POST /api/waiter/tables/{table}/assign` - Assign table to customers
+- `POST /api/waiter/orders/{order}/items` - Add items to order
+- `POST /api/waiter/orders/{order}/send-to-kitchen` - Send order to kitchen
+
+### Kitchen Routes
+- `GET /api/kitchen/orders` - Get kitchen order queue
+- `POST /api/kitchen/orders/{order}/start-preparing` - Start order preparation
+- `POST /api/kitchen/orders/{order}/mark-ready` - Mark order as ready
+- `POST /api/kitchen/orders/{order}/note` - Add kitchen notes
+
+### Reception Routes
+- `GET /api/reception/tables` - Get all tables status
+- `GET /api/reception/orders` - Get all orders
+- `GET /api/reception/stats` - Get dashboard statistics
+- `GET /api/reception/orders/{order}/bill` - Generate bill
+
+### Inventory Routes
+- `GET /api/inventory/items` - Get inventory items
+- `POST /api/inventory/items` - Create new item
+- `POST /api/inventory/items/{item}/stock` - Update stock levels
+- `GET /api/inventory/items/{item}/history` - Stock transaction history
+
+## Real-Time Events
+
+The system broadcasts the following events for real-time updates:
+
+- `OrderCreated` - New order placed
+- `OrderUpdated` - Order status/content changed
+- `TableStatusChanged` - Table assignment/status change
+- `InventoryUpdated` - Stock level changes
+
+## Database Schema
+
+### Core Tables
+- `users` - Staff members with role-based access
+- `restaurant_tables` - Physical tables with capacity and status
+- `orders` - Customer orders with status tracking
+- `order_items` - Individual items within orders
+- `menu_items` - Available food/beverage items
+- `categories` - Menu organization
+- `inventory_items` - Stock tracking
+- `stock_transactions` - Inventory movement history
+
+## Customization
+
+### Adding New Roles
+1. Update `User` model role methods
+2. Create role-specific middleware
+3. Add routes in `routes/api.php`
+4. Create corresponding Vue.js components
+5. Update role checking in frontend
+
+### Extending Features
+- **Payment Integration**: Add Stripe/PayPal for online payments
+- **QR Code Menus**: Generate table-specific QR codes
+- **Mobile App**: Create React Native/Flutter companion
+- **Advanced Analytics**: Add detailed reporting and forecasting
+- **Multi-location**: Extend for restaurant chains
+
+## Development
+
+### Frontend Development
+```bash
+npm run dev  # Start Vite development server
+npm run build  # Build for production
+```
+
+### Backend Development
+```bash
+php artisan serve  # Start Laravel development server
+php artisan queue:work  # Process background jobs
+php artisan reverb:start  # Start WebSocket server
+```
+
+### Testing
+```bash
+php artisan test  # Run PHP tests
+npm run test  # Run JavaScript tests (if configured)
+```
+
+## Production Deployment
+
+### Server Requirements
+- PHP 8.2+ with required extensions
+- MySQL 8.0+ or PostgreSQL 13+
+- Redis (recommended for caching/sessions)
+- SSL certificate for secure WebSocket connections
+
+### Environment Variables
+```env
+APP_ENV=production
+APP_DEBUG=false
+BROADCAST_CONNECTION=reverb
+REVERB_SCHEME=https  # For production with SSL
+REVERB_HOST=your-domain.com
+```
+
+### Optimization
+```bash
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+npm run build
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+## Support
+
+For support, email support@restaurant-system.com or join our Slack channel.
+
+---
+
+**Built with ❤️ for restaurants worldwide**
