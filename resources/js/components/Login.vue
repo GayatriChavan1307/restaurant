@@ -57,19 +57,20 @@
       <div class="mt-6 p-4 bg-blue-50 rounded-lg">
         <h3 class="text-sm font-medium text-blue-900 mb-2">Demo Accounts</h3>
         <div class="grid grid-cols-2 gap-2 text-xs">
-          <button @click="fillDemoCredentials('owner')" class="bg-blue-600 text-white px-2 py-1 rounded">
+          <button @click="fillDemoCredentials('owner')" class="bg-blue-600 text-white px-2 py-1 rounded hover:bg-blue-700">
             Owner
           </button>
-          <button @click="fillDemoCredentials('reception')" class="bg-purple-600 text-white px-2 py-1 rounded">
+          <button @click="fillDemoCredentials('reception')" class="bg-purple-600 text-white px-2 py-1 rounded hover:bg-purple-700">
             Reception
           </button>
-          <button @click="fillDemoCredentials('waiter')" class="bg-green-600 text-white px-2 py-1 rounded">
+          <button @click="fillDemoCredentials('waiter')" class="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700">
             Waiter
           </button>
-          <button @click="fillDemoCredentials('kitchen')" class="bg-orange-600 text-white px-2 py-1 rounded">
+          <button @click="fillDemoCredentials('kitchen')" class="bg-orange-600 text-white px-2 py-1 rounded hover:bg-orange-700">
             Kitchen
           </button>
         </div>
+        <p class="text-xs text-blue-700 mt-2">Click a role above to auto-fill credentials, then click Sign in</p>
       </div>
     </div>
   </div>
@@ -78,6 +79,7 @@
 <script>
 export default {
   name: 'Login',
+  emits: ['login-success'],
   data() {
     return {
       form: {
@@ -103,26 +105,12 @@ export default {
           axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
         }
         
-        // Redirect based on user role
-        switch (user.role) {
-          case 'owner':
-          case 'superadmin':
-            this.$router.push('/owner');
-            break;
-          case 'reception':
-            this.$router.push('/reception');
-            break;
-          case 'waiter':
-            this.$router.push('/waiter');
-            break;
-          case 'kitchen':
-            this.$router.push('/kitchen');
-            break;
-          default:
-            this.$router.push('/');
-        }
+        // Emit success event to parent component
+        this.$emit('login-success', user);
+        
       } catch (error) {
-        this.error = error.response?.data?.message || 'Login failed';
+        this.error = error.response?.data?.message || 'Login failed. Please try the demo accounts.';
+        console.error('Login error:', error);
       } finally {
         this.loading = false;
       }
@@ -138,6 +126,7 @@ export default {
       if (credentials[role]) {
         this.form.email = credentials[role].email;
         this.form.password = credentials[role].password;
+        this.error = ''; // Clear any previous errors
       }
     }
   }

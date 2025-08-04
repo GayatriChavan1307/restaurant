@@ -16,8 +16,23 @@
 </head>
 <body class="font-sans antialiased">
     <div id="app">
-        <!-- Vue.js will mount here -->
-        <div class="min-h-screen bg-gray-100 flex items-center justify-center">
+        <!-- Login View -->
+        <login v-if="currentView === 'login'" @login-success="onLoginSuccess"></login>
+        
+        <!-- Owner Dashboard -->
+        <owner-dashboard v-if="currentView === 'owner'"></owner-dashboard>
+        
+        <!-- Reception Dashboard -->
+        <reception-dashboard v-if="currentView === 'reception'"></reception-dashboard>
+        
+        <!-- Waiter Dashboard -->
+        <waiter-dashboard v-if="currentView === 'waiter'"></waiter-dashboard>
+        
+        <!-- Kitchen Dashboard -->
+        <kitchen-dashboard v-if="currentView === 'kitchen'"></kitchen-dashboard>
+        
+        <!-- Loading state while Vue is mounting -->
+        <div v-if="!currentView" class="min-h-screen bg-gray-100 flex items-center justify-center">
             <div class="text-center">
                 <div class="animate-spin rounded-full h-32 w-32 border-b-2 border-indigo-600 mx-auto"></div>
                 <p class="mt-4 text-gray-600">Loading Restaurant Management System...</p>
