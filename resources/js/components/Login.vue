@@ -52,6 +52,25 @@
           </button>
         </div>
       </form>
+
+      <!-- Demo Accounts -->
+      <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+        <h3 class="text-sm font-medium text-blue-900 mb-2">Demo Accounts</h3>
+        <div class="grid grid-cols-2 gap-2 text-xs">
+          <button @click="fillDemoCredentials('owner')" class="bg-blue-600 text-white px-2 py-1 rounded">
+            Owner
+          </button>
+          <button @click="fillDemoCredentials('reception')" class="bg-purple-600 text-white px-2 py-1 rounded">
+            Reception
+          </button>
+          <button @click="fillDemoCredentials('waiter')" class="bg-green-600 text-white px-2 py-1 rounded">
+            Waiter
+          </button>
+          <button @click="fillDemoCredentials('kitchen')" class="bg-orange-600 text-white px-2 py-1 rounded">
+            Kitchen
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -75,8 +94,14 @@ export default {
       this.error = '';
       
       try {
-        const response = await this.$http.post('/api/login', this.form);
+        const response = await axios.post('/api/login', this.form);
         const user = response.data.user;
+        
+        // Store token (if using Sanctum)
+        if (response.data.token) {
+          localStorage.setItem('auth_token', response.data.token);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        }
         
         // Redirect based on user role
         switch (user.role) {
@@ -100,6 +125,19 @@ export default {
         this.error = error.response?.data?.message || 'Login failed';
       } finally {
         this.loading = false;
+      }
+    },
+    fillDemoCredentials(role) {
+      const credentials = {
+        owner: { email: 'admin@restaurant.com', password: 'password' },
+        reception: { email: 'reception@restaurant.com', password: 'password' },
+        waiter: { email: 'waiter@restaurant.com', password: 'password' },
+        kitchen: { email: 'kitchen@restaurant.com', password: 'password' }
+      };
+      
+      if (credentials[role]) {
+        this.form.email = credentials[role].email;
+        this.form.password = credentials[role].password;
       }
     }
   }

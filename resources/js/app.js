@@ -16,6 +16,9 @@ import Login from './components/Login.vue';
 
 console.log('Starting Restaurant Management App...');
 
+// Make axios globally available
+window.axios = axios;
+
 // Configure axios
 axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 const token = document.head.querySelector('meta[name="csrf-token"]');
@@ -55,6 +58,13 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+// Simple toast notification system
+const toast = {
+    success: (message) => console.log('✅ Success:', message),
+    error: (message) => console.error('❌ Error:', message),
+    info: (message) => console.log('ℹ️ Info:', message)
+};
 
 // Create Vue app
 const app = createApp({
@@ -123,10 +133,16 @@ const app = createApp({
     provide() {
         return {
             $echo: window.Echo,
-            $user: this.user
+            $user: this.user,
+            $http: axios,
+            $toast: toast
         }
     }
 });
+
+// Global properties
+app.config.globalProperties.$http = axios;
+app.config.globalProperties.$toast = toast;
 
 // Register global components
 app.component('owner-dashboard', OwnerDashboard);
