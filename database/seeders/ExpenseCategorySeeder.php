@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\ExpenseCategory;
-use Illuminate\Support\Facades\DB;
 
 class ExpenseCategorySeeder extends Seeder
 {
@@ -14,21 +12,47 @@ class ExpenseCategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('expense_categories')->delete(); // Clear existing data
-
         $categories = [
-            ['name' => 'Rent', 'description' => 'Monthly rent for the premises.'],
-            ['name' => 'Utilities', 'description' => 'Electricity, water, gas, internet bills.'],
-            ['name' => 'Salaries & Wages', 'description' => 'Staff salaries and wages.'],
-            ['name' => 'Food Supplies Purchase', 'description' => 'Cost of purchasing raw food ingredients.'],
-            ['name' => 'Beverage Supplies Purchase', 'description' => 'Cost of purchasing beverages.'],
-            ['name' => 'Marketing & Advertising', 'description' => 'Promotional expenses.'],
-            ['name' => 'Maintenance & Repairs', 'description' => 'Equipment repairs, general maintenance.'],
-            ['name' => 'Cleaning Supplies', 'description' => 'Detergents, cleaning tools, etc.'],
-            ['name' => 'Packaging Supplies', 'description' => 'Takeaway containers, bags, etc.'],
-            ['name' => 'Licenses & Permits', 'description' => 'Business licenses, health permits.'],
-            ['name' => 'Bank Charges', 'description' => 'Fees related to banking services.'],
-            ['name' => 'Miscellaneous', 'description' => 'Other sundry expenses.'],
+            [
+                'name' => 'Produce',
+                'description' => 'Fresh fruits and vegetables'
+            ],
+            [
+                'name' => 'Meat & Poultry',
+                'description' => 'Fresh meat and poultry products'
+            ],
+            [
+                'name' => 'Seafood',
+                'description' => 'Fresh and frozen seafood'
+            ],
+            [
+                'name' => 'Dairy',
+                'description' => 'Milk, cheese, and dairy products'
+            ],
+            [
+                'name' => 'Pantry',
+                'description' => 'Dry goods and pantry items'
+            ],
+            [
+                'name' => 'Beverages',
+                'description' => 'Soft drinks, juices, and non-alcoholic beverages'
+            ],
+            [
+                'name' => 'Alcoholic Beverages',
+                'description' => 'Wine, beer, and spirits'
+            ],
+            [
+                'name' => 'Cleaning Supplies',
+                'description' => 'Kitchen and restaurant cleaning supplies'
+            ],
+            [
+                'name' => 'Paper Goods',
+                'description' => 'Napkins, paper towels, and disposable items'
+            ],
+            [
+                'name' => 'Equipment',
+                'description' => 'Kitchen equipment and tools'
+            ]
         ];
 
         foreach ($categories as $category) {

@@ -1,251 +1,301 @@
 # Restaurant Management System
 
-A comprehensive Vue.js + Laravel restaurant management system with real-time features, role-based access control, and dynamic inventory management.
+A comprehensive restaurant management system built with Laravel 11 and Vue.js, designed to streamline restaurant operations including table management, order taking, kitchen communication, billing, and menu management.
 
-## Features
+## 🚀 Features
 
-### Multi-Role Access System
-- **Owner/Admin Dashboard**: Analytics, staff management, reports, inventory oversight
-- **Reception Dashboard**: Real-time monitoring, billing, customer management
-- **Waiter Interface**: Table management, order taking, menu browsing
-- **Kitchen Dashboard**: Order queue management, preparation tracking, real-time updates
+### 👤 User Roles & Permissions
 
-### Real-Time Features
-- Live order status updates across all interfaces
-- Real-time table status changes
-- Instant notifications for new orders and updates
-- Kitchen order queue with preparation time tracking
-- Live inventory alerts for low stock items
+#### 🔹 Waiter
+- **Dashboard**: Visual table layout with real-time status
+- **Table Assignment**: Click tables to assign customers with capacity tracking
+- **Order Management**: 
+  - Take orders with categorized menu items
+  - Save and print orders to kitchen
+  - Modify existing orders (add/remove items)
+  - Cancel orders with kitchen notifications
+- **Real-time Updates**: Live order status and table availability
 
-### Core Functionality
-- **Table Management**: Visual table layout, assignment, and status tracking
-- **Order Management**: Complete order lifecycle from creation to completion
-- **Menu Management**: Categories, items, pricing, and availability
-- **Inventory Tracking**: Stock levels, usage tracking, supplier management
-- **Billing System**: Invoice generation and payment processing
-- **Reporting**: Sales analytics, staff performance, inventory reports
+#### 🔹 Reception
+- **Dashboard**: Live table status and ongoing orders overview
+- **Menu Management**: Add, update, or remove menu items and categories
+- **Notifications**: Real-time notifications for order cancellations and table activities
+- **Billing**: Generate and print final bills with tax calculations
+- **Order Monitoring**: Track all active orders and their status
 
-## Technology Stack
+#### 🔹 Super Admin
+- **Full Access**: Complete system access and management
+- **User Management**: Create and manage waiters, receptionists, and kitchen staff
+- **Analytics**: Comprehensive reports and business insights
+- **System Settings**: Configure restaurant settings, table layout, and printer settings
+- **Inventory Management**: Track stock levels and supplier information
 
-### Frontend
-- **Vue.js 3** with Composition API
-- **Vue Router 4** for SPA navigation
-- **Tailwind CSS** for modern UI styling
-- **Axios** for API communication
-- **Laravel Echo** + **Pusher** for real-time features
-- **Moment.js** for date/time handling
+### 📦 Core Modules
 
-### Backend
-- **Laravel 12** with modern PHP 8.2+ features
-- **Laravel Sanctum** for API authentication
-- **Laravel Reverb** for WebSocket broadcasting
-- **MySQL** database with optimized relationships
-- **Event-driven architecture** for real-time updates
+#### Authentication
+- Multi-role login system (Waiter, Reception, Super Admin, Kitchen)
+- Laravel Sanctum for API authentication
+- Role-based access control
 
-## Quick Start
+#### Table Management
+- Visual table layout with drag-and-drop positioning
+- Real-time table status (Free, Occupied, Reserved, Maintenance)
+- Capacity tracking and customer count management
+- Table assignment and reservation system
 
-### Prerequisites
+#### Menu Management
+- CRUD operations for menu categories and items
+- Item details: name, description, price, image, availability
+- Category-based organization
+- Price history tracking
+
+#### Order Management
+- Complete order lifecycle: Assignment → Order → Kitchen → Service → Payment
+- Real-time order status updates
+- Kitchen printing system (simulated)
+- Order modification and cancellation capabilities
+- Tax calculation and billing
+
+#### Kitchen Integration
+- Order printing to kitchen (simulated)
+- Real-time order status updates
+- Kitchen staff notifications
+- Order preparation tracking
+
+#### Billing System
+- Automatic tax calculation
+- Detailed bill generation
+- Payment tracking
+- Receipt printing
+
+#### Notifications System
+- Real-time notifications using Laravel Reverb
+- Role-specific notifications
+- Order status updates
+- System alerts
+
+#### Inventory Management
+- Stock level tracking
+- Supplier management
+- Reorder level alerts
+- Cost tracking and reporting
+
+## 🛠️ Technical Stack
+
+- **Backend**: Laravel 11
+- **Frontend**: Vue.js 3 with Tailwind CSS
+- **Database**: SQLite (development) / MySQL (production)
+- **Authentication**: Laravel Sanctum
+- **Real-time**: Laravel Reverb with WebSockets
+- **Build Tool**: Vite
+
+## 📋 Prerequisites
+
 - PHP 8.2+
 - Node.js 18+
-- MySQL 8.0+
 - Composer
+- SQLite (for development)
 
-### Installation
+## 🚀 Installation
 
-1. **Clone and Setup**
-```bash
-git clone <repository-url>
-cd restaurant-management
-composer install
-npm install
-```
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd restaurant-management-system
+   ```
 
-2. **Environment Configuration**
-```bash
-cp .env.example .env
-php artisan key:generate
-```
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-3. **Database Setup**
-```bash
-php artisan migrate
-php artisan db:seed
-```
+3. **Install Node.js dependencies**
+   ```bash
+   npm install
+   ```
 
-4. **Build Frontend**
-```bash
-npm run build
-# or for development
-npm run dev
-```
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
 
-5. **Start Services**
-```bash
-# Terminal 1: Laravel Server
-php artisan serve
+5. **Database setup**
+   ```bash
+   touch database/database.sqlite
+   php artisan migrate:fresh --seed
+   ```
 
-# Terminal 2: WebSocket Server
-php artisan reverb:start
+6. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
 
-# Terminal 3: Queue Worker (for background jobs)
-php artisan queue:work
-```
+7. **Start the frontend build process (in another terminal)**
+   ```bash
+   npm run dev
+   ```
 
-## User Roles & Access
+## 👥 Default Users
 
-### Default Login Credentials
+The system comes with pre-seeded users for testing:
 
-**Owner/Admin**
-- Email: admin@restaurant.com
-- Password: password
-- Access: Full system control, analytics, staff management
+### Super Admin
+- **Email**: admin@restaurant.com
+- **Password**: password
 
-**Reception**
-- Email: reception@restaurant.com
-- Password: password
-- Access: Orders monitoring, billing, customer management
+### Reception
+- **Email**: reception@restaurant.com
+- **Password**: password
 
-**Waiter**
-- Email: waiter@restaurant.com
-- Password: password
-- Access: Table assignment, order taking, menu management
+### Waiters
+- **Email**: waiter1@restaurant.com
+- **Password**: password
+- **Email**: waiter2@restaurant.com
+- **Password**: password
 
-**Kitchen**
-- Email: kitchen@restaurant.com
-- Password: password
-- Access: Order preparation, status updates, kitchen notes
+### Kitchen Staff
+- **Email**: kitchen@restaurant.com
+- **Password**: password
 
-## API Endpoints
+## 📊 Sample Data
+
+The system includes comprehensive sample data:
+
+### Menu Items
+- **Starters**: Bruschetta, Mozzarella Sticks, Garlic Bread
+- **Soups**: Tomato Basil Soup, Chicken Noodle Soup
+- **Salads**: Caesar Salad, Greek Salad
+- **Main Course**: Grilled Chicken Breast, Beef Tenderloin, Vegetable Stir Fry
+- **Pasta**: Spaghetti Carbonara, Fettuccine Alfredo
+- **Seafood**: Grilled Salmon, Shrimp Scampi
+- **Desserts**: Tiramisu, Chocolate Lava Cake, New York Cheesecake
+- **Beverages**: Fresh Orange Juice, Lemonade, Iced Tea
+- **Coffee & Tea**: Espresso, Cappuccino, Green Tea
+- **Alcoholic Drinks**: House Red Wine, House White Wine, Draft Beer
+
+### Tables
+- 10 regular tables (2-8 person capacity)
+- 4 bar seats
+- Visual layout with coordinates
+
+### Inventory
+- Fresh produce, meat, seafood, dairy, pantry items
+- Supplier information
+- Stock levels and reorder points
+
+## 🔧 API Endpoints
 
 ### Authentication
-- `POST /api/login` - User authentication
+- `POST /api/login` - User login
 - `POST /api/logout` - User logout
-- `GET /api/user` - Current user info
+- `GET /api/user` - Get current user
 
 ### Waiter Routes
-- `GET /api/waiter/tables` - Get all tables with status
-- `GET /api/waiter/orders` - Get waiter's active orders
-- `POST /api/waiter/tables/{table}/assign` - Assign table to customers
+- `GET /api/waiter/tables` - Get all tables
+- `POST /api/waiter/tables/{table}/assign` - Assign table
 - `POST /api/waiter/orders/{order}/items` - Add items to order
 - `POST /api/waiter/orders/{order}/send-to-kitchen` - Send order to kitchen
 
-### Kitchen Routes
-- `GET /api/kitchen/orders` - Get kitchen order queue
-- `POST /api/kitchen/orders/{order}/start-preparing` - Start order preparation
-- `POST /api/kitchen/orders/{order}/mark-ready` - Mark order as ready
-- `POST /api/kitchen/orders/{order}/note` - Add kitchen notes
-
 ### Reception Routes
-- `GET /api/reception/tables` - Get all tables status
-- `GET /api/reception/orders` - Get all orders
-- `GET /api/reception/stats` - Get dashboard statistics
-- `GET /api/reception/orders/{order}/bill` - Generate bill
+- `GET /api/reception/tables` - Get table status
+- `GET /api/reception/orders` - Get active orders
+- `GET /api/reception/notifications` - Get notifications
+- `POST /api/reception/orders/{order}/paid` - Mark order as paid
 
-### Inventory Routes
-- `GET /api/inventory/items` - Get inventory items
-- `POST /api/inventory/items` - Create new item
-- `POST /api/inventory/items/{item}/stock` - Update stock levels
-- `GET /api/inventory/items/{item}/history` - Stock transaction history
+### Super Admin Routes
+- `GET /api/owner/analytics` - Get business analytics
+- `GET /api/owner/staff` - Get staff list
+- `POST /api/owner/staff` - Create staff member
+- `POST /api/owner/reports/generate` - Generate reports
 
-## Real-Time Events
+### Kitchen Routes
+- `GET /api/kitchen/orders` - Get kitchen orders
+- `POST /api/kitchen/orders/{order}/start-preparing` - Start preparing order
+- `POST /api/kitchen/orders/{order}/mark-ready` - Mark order as ready
 
-The system broadcasts the following events for real-time updates:
+## 🎨 Frontend Components
 
-- `OrderCreated` - New order placed
-- `OrderUpdated` - Order status/content changed
-- `TableStatusChanged` - Table assignment/status change
-- `InventoryUpdated` - Stock level changes
+### Dashboard Components
+- `WaiterDashboard.vue` - Waiter interface with table management
+- `ReceptionDashboard.vue` - Reception interface with order monitoring
+- `OwnerDashboard.vue` - Super admin analytics and management
+- `KitchenDashboard.vue` - Kitchen order management
 
-## Database Schema
+### Shared Components
+- `TableLayout.vue` - Visual table layout component
+- `OrderManagement.vue` - Order creation and management
+- `InventoryManagement.vue` - Inventory tracking interface
+- `Login.vue` - Authentication component
 
-### Core Tables
-- `users` - Staff members with role-based access
-- `restaurant_tables` - Physical tables with capacity and status
-- `orders` - Customer orders with status tracking
-- `order_items` - Individual items within orders
-- `menu_items` - Available food/beverage items
-- `categories` - Menu organization
-- `inventory_items` - Stock tracking
-- `stock_transactions` - Inventory movement history
+## 🔄 Real-time Features
 
-## Customization
+The system uses Laravel Reverb for real-time updates:
 
-### Adding New Roles
-1. Update `User` model role methods
-2. Create role-specific middleware
-3. Add routes in `routes/api.php`
-4. Create corresponding Vue.js components
-5. Update role checking in frontend
+- **Order Updates**: Live order status changes
+- **Table Status**: Real-time table availability
+- **Notifications**: Instant notifications for all roles
+- **Kitchen Communication**: Live order printing and status updates
 
-### Extending Features
-- **Payment Integration**: Add Stripe/PayPal for online payments
-- **QR Code Menus**: Generate table-specific QR codes
-- **Mobile App**: Create React Native/Flutter companion
-- **Advanced Analytics**: Add detailed reporting and forecasting
-- **Multi-location**: Extend for restaurant chains
+## 📈 Business Intelligence
 
-## Development
+### Analytics Dashboard
+- Daily revenue tracking
+- Order volume analysis
+- Table utilization rates
+- Staff performance metrics
+- Popular menu items
 
-### Frontend Development
-```bash
-npm run dev  # Start Vite development server
-npm run build  # Build for production
-```
+### Reporting
+- Sales reports by date range
+- Inventory reports
+- Staff performance reports
+- Customer analytics
 
-### Backend Development
-```bash
-php artisan serve  # Start Laravel development server
-php artisan queue:work  # Process background jobs
-php artisan reverb:start  # Start WebSocket server
-```
+## 🔒 Security Features
 
-### Testing
-```bash
-php artisan test  # Run PHP tests
-npm run test  # Run JavaScript tests (if configured)
-```
+- Role-based access control
+- API authentication with Sanctum
+- CSRF protection
+- Input validation and sanitization
+- Secure password hashing
 
-## Production Deployment
+## 🚀 Deployment
 
-### Server Requirements
-- PHP 8.2+ with required extensions
-- MySQL 8.0+ or PostgreSQL 13+
-- Redis (recommended for caching/sessions)
-- SSL certificate for secure WebSocket connections
+### Production Requirements
+- PHP 8.2+
+- MySQL 8.0+ or PostgreSQL
+- Redis (for caching and sessions)
+- Web server (Apache/Nginx)
+- SSL certificate
 
 ### Environment Variables
 ```env
 APP_ENV=production
 APP_DEBUG=false
-BROADCAST_CONNECTION=reverb
-REVERB_SCHEME=https  # For production with SSL
-REVERB_HOST=your-domain.com
+DB_CONNECTION=mysql
+BROADCAST_CONNECTION=pusher
+CACHE_DRIVER=redis
+SESSION_DRIVER=redis
+QUEUE_CONNECTION=redis
 ```
 
-### Optimization
-```bash
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-npm run build
-```
-
-## Contributing
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License.
 
-## Support
+## 🆘 Support
 
-For support, email support@restaurant-system.com or join our Slack channel.
+For support and questions, please open an issue in the repository.
 
 ---
 
-**Built with ❤️ for restaurants worldwide**
+**Built with ❤️ using Laravel 11 and Vue.js 3**
