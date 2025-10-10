@@ -11,11 +11,20 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasApiTokens;
 
+    const ROLE_ADMIN = 'admin';
+    const ROLE_MANAGER = 'manager';
+    const ROLE_SALES = 'sales';
+    const ROLE_CUSTOMER = 'customer';
+
     protected $fillable = [
         'name',
         'email',
         'password',
-        'role', // Add role
+        'role',
+        'phone',
+        'company_name',
+        'country',
+        'is_active',
     ];
 
     protected $hidden = [
@@ -28,47 +37,37 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_active' => 'boolean',
         ];
     }
 
-    // Helper methods for role checking
-    public function isSuperAdmin(): bool
+    public function isAdmin()
     {
-        return $this->role === 'superadmin';
+        return $this->role === self::ROLE_ADMIN;
     }
 
-    public function isOwner(): bool
+    public function isManager()
     {
-        return $this->role === 'owner';
+        return $this->role === self::ROLE_MANAGER;
     }
 
-    public function isReception(): bool
+    public function isSales()
     {
-        return $this->role === 'reception';
+        return $this->role === self::ROLE_SALES;
     }
 
-    public function isWaiter(): bool
+    public function isCustomer()
     {
-        return $this->role === 'waiter';
+        return $this->role === self::ROLE_CUSTOMER;
     }
 
-    public function isKitchen(): bool
+    public function inquiries()
     {
-        return $this->role === 'kitchen';
+        return $this->hasMany(Inquiry::class, 'customer_email', 'email');
     }
 
-    public function ordersTaken() // As waiter
+    public function scopeActive($query)
     {
-        return $this->hasMany(Order::class, 'user_id');
-    }
-
-    public function kitchenPrints()
-    {
-        return $this->hasMany(KitchenPrint::class, 'user_id');
-    }
-
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class, 'user_id')->orderBy('created_at', 'desc');
+        return $query->where('is_active', true);
     }
 }
