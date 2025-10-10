@@ -2,59 +2,65 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Super Admin
+        // Create admin user
         User::create([
-            'name' => 'Super Admin',
-            'email' => 'admin@restaurant.com',
+            'name' => 'Admin User',
+            'email' => 'admin@importexport.com',
             'password' => Hash::make('password'),
-            'role' => 'superadmin',
-            'email_verified_at' => now(),
+            'role' => User::ROLE_ADMIN,
+            'phone' => '+1-555-123-4567',
+            'is_active' => true,
         ]);
 
-        // Reception
+        // Create manager user
         User::create([
-            'name' => 'Reception Staff',
-            'email' => 'reception@restaurant.com',
+            'name' => 'Manager User',
+            'email' => 'manager@importexport.com',
             'password' => Hash::make('password'),
-            'role' => 'reception',
-            'email_verified_at' => now(),
+            'role' => User::ROLE_MANAGER,
+            'phone' => '+1-555-123-4568',
+            'is_active' => true,
         ]);
 
-        // Waiters
+        // Create sales user
         User::create([
-            'name' => 'John Waiter',
-            'email' => 'waiter1@restaurant.com',
+            'name' => 'Sales Representative',
+            'email' => 'sales@importexport.com',
             'password' => Hash::make('password'),
-            'role' => 'waiter',
-            'email_verified_at' => now(),
+            'role' => User::ROLE_SALES,
+            'phone' => '+1-555-123-4569',
+            'is_active' => true,
+        ]);
+
+        // Create some customer users
+        User::create([
+            'name' => 'John Smith',
+            'email' => 'john@example.com',
+            'password' => Hash::make('password'),
+            'role' => User::ROLE_CUSTOMER,
+            'phone' => '+1-555-987-6543',
+            'company_name' => 'Smith Trading Co.',
+            'country' => 'United States',
+            'is_active' => true,
         ]);
 
         User::create([
-            'name' => 'Sarah Waiter',
-            'email' => 'waiter2@restaurant.com',
+            'name' => 'Maria Garcia',
+            'email' => 'maria@example.com',
             'password' => Hash::make('password'),
-            'role' => 'waiter',
-            'email_verified_at' => now(),
-        ]);
-
-        // Kitchen Staff
-        User::create([
-            'name' => 'Chef Mike',
-            'email' => 'kitchen@restaurant.com',
-            'password' => Hash::make('password'),
-            'role' => 'kitchen',
-            'email_verified_at' => now(),
+            'role' => User::ROLE_CUSTOMER,
+            'phone' => '+34-123-456-789',
+            'company_name' => 'European Imports Ltd.',
+            'country' => 'Spain',
+            'is_active' => true,
         ]);
     }
 }

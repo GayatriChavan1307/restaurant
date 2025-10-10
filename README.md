@@ -1,107 +1,56 @@
-# Restaurant Management System
+# Import Export Business Website
 
-A comprehensive restaurant management system built with Laravel 11 and Vue.js, designed to streamline restaurant operations including table management, order taking, kitchen communication, billing, and menu management.
+A comprehensive PHP Laravel website for import/export businesses, built based on the reference site [sidexports.com](https://sidexports.com/). This application provides both frontend and backend functionality for managing an import/export business with modern UI/UX and responsive design.
 
 ## 🚀 Features
 
-### 👤 User Roles & Permissions
+### 🌐 Frontend Features
+- **Modern Homepage** with hero section, featured products, and company statistics
+- **Product Catalog** with advanced filtering, search, and categorization
+- **Product Details** with specifications, images, and inquiry forms
+- **About Us** page with company story, mission, vision, and team
+- **Contact Page** with contact form, map integration, and FAQ section
+- **Responsive Design** optimized for all devices
+- **SEO Optimized** with proper meta tags and structured data
 
-#### 🔹 Waiter
-- **Dashboard**: Visual table layout with real-time status
-- **Table Assignment**: Click tables to assign customers with capacity tracking
-- **Order Management**: 
-  - Take orders with categorized menu items
-  - Save and print orders to kitchen
-  - Modify existing orders (add/remove items)
-  - Cancel orders with kitchen notifications
-- **Real-time Updates**: Live order status and table availability
+### 🔧 Backend Features
+- **Admin Dashboard** with comprehensive analytics and statistics
+- **Product Management** - Create, edit, delete, and manage products
+- **Category Management** - Organize products into categories and subcategories
+- **Inquiry Management** - Handle customer inquiries with status tracking
+- **Supplier Management** - Manage supplier information and relationships
+- **User Management** - Role-based access control (Admin, Manager, Sales, Customer)
+- **Company Profile** - Manage company information and settings
 
-#### 🔹 Reception
-- **Dashboard**: Live table status and ongoing orders overview
-- **Menu Management**: Add, update, or remove menu items and categories
-- **Notifications**: Real-time notifications for order cancellations and table activities
-- **Billing**: Generate and print final bills with tax calculations
-- **Order Monitoring**: Track all active orders and their status
-
-#### 🔹 Super Admin
-- **Full Access**: Complete system access and management
-- **User Management**: Create and manage waiters, receptionists, and kitchen staff
-- **Analytics**: Comprehensive reports and business insights
-- **System Settings**: Configure restaurant settings, table layout, and printer settings
-- **Inventory Management**: Track stock levels and supplier information
-
-### 📦 Core Modules
-
-#### Authentication
-- Multi-role login system (Waiter, Reception, Super Admin, Kitchen)
-- Laravel Sanctum for API authentication
-- Role-based access control
-
-#### Table Management
-- Visual table layout with drag-and-drop positioning
-- Real-time table status (Free, Occupied, Reserved, Maintenance)
-- Capacity tracking and customer count management
-- Table assignment and reservation system
-
-#### Menu Management
-- CRUD operations for menu categories and items
-- Item details: name, description, price, image, availability
-- Category-based organization
-- Price history tracking
-
-#### Order Management
-- Complete order lifecycle: Assignment → Order → Kitchen → Service → Payment
-- Real-time order status updates
-- Kitchen printing system (simulated)
-- Order modification and cancellation capabilities
-- Tax calculation and billing
-
-#### Kitchen Integration
-- Order printing to kitchen (simulated)
-- Real-time order status updates
-- Kitchen staff notifications
-- Order preparation tracking
-
-#### Billing System
-- Automatic tax calculation
-- Detailed bill generation
-- Payment tracking
-- Receipt printing
-
-#### Notifications System
-- Real-time notifications using Laravel Reverb
-- Role-specific notifications
-- Order status updates
-- System alerts
-
-#### Inventory Management
-- Stock level tracking
-- Supplier management
-- Reorder level alerts
-- Cost tracking and reporting
+### 📊 Business Features
+- **Inquiry System** - Customers can submit product inquiries with detailed requirements
+- **Quote Management** - Admin can respond to inquiries with quotes and follow-ups
+- **Product Specifications** - Detailed product information with certifications
+- **Global Reach** - Multi-currency support and international shipping information
+- **Quality Certifications** - Display product certifications and compliance information
 
 ## 🛠️ Technical Stack
 
-- **Backend**: Laravel 11
-- **Frontend**: Vue.js 3 with Tailwind CSS
-- **Database**: SQLite (development) / MySQL (production)
+- **Backend**: Laravel 12 (PHP 8.2+)
+- **Frontend**: Bootstrap 5, HTML5, CSS3, JavaScript
+- **Database**: MySQL/SQLite
 - **Authentication**: Laravel Sanctum
-- **Real-time**: Laravel Reverb with WebSockets
-- **Build Tool**: Vite
+- **UI Components**: Font Awesome icons, AOS animations
+- **Responsive Framework**: Bootstrap 5 with custom CSS
 
 ## 📋 Prerequisites
 
-- PHP 8.2+
-- Node.js 18+
+- PHP 8.2 or higher
 - Composer
-- SQLite (for development)
+- Node.js 18+ and npm
+- MySQL 8.0+ or SQLite
+- Web server (Apache/Nginx)
 
 ## 🚀 Installation
 
-1. **Clone the repository**
+1. **Clone or use the existing repository**
    ```bash
-   git clone <repository-url>
-   cd restaurant-management-system
+   cd /workspace
    ```
 
 2. **Install PHP dependencies**
@@ -117,185 +66,240 @@ A comprehensive restaurant management system built with Laravel 11 and Vue.js, d
 4. **Environment setup**
    ```bash
    cp .env.example .env
+   # Edit .env file with your database and application settings
+   ```
+
+5. **Generate application key**
+   ```bash
    php artisan key:generate
    ```
 
-5. **Database setup**
+6. **Run database migrations and seeders**
    ```bash
-   touch database/database.sqlite
    php artisan migrate:fresh --seed
    ```
 
-6. **Start the development server**
+7. **Create storage symlink**
    ```bash
-   php artisan serve
+   php artisan storage:link
    ```
 
-7. **Start the frontend build process (in another terminal)**
+8. **Build frontend assets**
    ```bash
-   npm run dev
+   npm run build
+   ```
+
+9. **Start the development server**
+   ```bash
+   php artisan serve
    ```
 
 ## 👥 Default Users
 
 The system comes with pre-seeded users for testing:
 
-### Super Admin
-- **Email**: admin@restaurant.com
+### Admin User
+- **Email**: admin@importexport.com
 - **Password**: password
+- **Role**: Admin (Full access)
 
-### Reception
-- **Email**: reception@restaurant.com
+### Manager User
+- **Email**: manager@importexport.com
 - **Password**: password
+- **Role**: Manager (Management access)
 
-### Waiters
-- **Email**: waiter1@restaurant.com
+### Sales User
+- **Email**: sales@importexport.com
 - **Password**: password
-- **Email**: waiter2@restaurant.com
-- **Password**: password
+- **Role**: Sales (Sales operations)
 
-### Kitchen Staff
-- **Email**: kitchen@restaurant.com
+### Customer Users
+- **Email**: john@example.com / maria@example.com
 - **Password**: password
+- **Role**: Customer (Frontend access)
 
 ## 📊 Sample Data
 
-The system includes comprehensive sample data:
+The application includes comprehensive sample data:
 
-### Menu Items
-- **Starters**: Bruschetta, Mozzarella Sticks, Garlic Bread
-- **Soups**: Tomato Basil Soup, Chicken Noodle Soup
-- **Salads**: Caesar Salad, Greek Salad
-- **Main Course**: Grilled Chicken Breast, Beef Tenderloin, Vegetable Stir Fry
-- **Pasta**: Spaghetti Carbonara, Fettuccine Alfredo
-- **Seafood**: Grilled Salmon, Shrimp Scampi
-- **Desserts**: Tiramisu, Chocolate Lava Cake, New York Cheesecake
-- **Beverages**: Fresh Orange Juice, Lemonade, Iced Tea
-- **Coffee & Tea**: Espresso, Cappuccino, Green Tea
-- **Alcoholic Drinks**: House Red Wine, House White Wine, Draft Beer
+### Products
+- Premium Red Onions
+- Dehydrated Onion Powder
+- Basmati Rice Premium
+- Turmeric Powder
+- Black Pepper Whole
+- Cashew Nuts W320
 
-### Tables
-- 10 regular tables (2-8 person capacity)
-- 4 bar seats
-- Visual layout with coordinates
+### Categories
+- Agricultural Products (with subcategories)
+- Spices & Herbs
+- Food Products
+- Industrial Goods
+- Textiles
+- Chemicals
 
-### Inventory
-- Fresh produce, meat, seafood, dairy, pantry items
-- Supplier information
-- Stock levels and reorder points
+### Company Information
+- Complete company profile with contact details
+- Business hours and social media links
+- Certifications and export countries
+- Mission, vision, and values
 
-## 🔧 API Endpoints
+### Testimonials
+- Customer testimonials from various countries
+- Ratings and company information
+- Featured testimonials for homepage
 
-### Authentication
-- `POST /api/login` - User login
-- `POST /api/logout` - User logout
-- `GET /api/user` - Get current user
+## 🔧 Configuration
 
-### Waiter Routes
-- `GET /api/waiter/tables` - Get all tables
-- `POST /api/waiter/tables/{table}/assign` - Assign table
-- `POST /api/waiter/orders/{order}/items` - Add items to order
-- `POST /api/waiter/orders/{order}/send-to-kitchen` - Send order to kitchen
+### Database Configuration
+Update your `.env` file with database credentials:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=import_export_db
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
 
-### Reception Routes
-- `GET /api/reception/tables` - Get table status
-- `GET /api/reception/orders` - Get active orders
-- `GET /api/reception/notifications` - Get notifications
-- `POST /api/reception/orders/{order}/paid` - Mark order as paid
+### Mail Configuration
+Configure email settings for contact forms and notifications:
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=your_smtp_host
+MAIL_PORT=587
+MAIL_USERNAME=your_email
+MAIL_PASSWORD=your_password
+MAIL_ENCRYPTION=tls
+```
 
-### Super Admin Routes
-- `GET /api/owner/analytics` - Get business analytics
-- `GET /api/owner/staff` - Get staff list
-- `POST /api/owner/staff` - Create staff member
-- `POST /api/owner/reports/generate` - Generate reports
+### Application Settings
+```env
+APP_NAME="ImportExport Business"
+APP_URL=http://localhost:8000
+APP_TIMEZONE=UTC
+```
 
-### Kitchen Routes
-- `GET /api/kitchen/orders` - Get kitchen orders
-- `POST /api/kitchen/orders/{order}/start-preparing` - Start preparing order
-- `POST /api/kitchen/orders/{order}/mark-ready` - Mark order as ready
+## 📱 Key Pages and Routes
 
-## 🎨 Frontend Components
+### Frontend Routes
+- `/` - Homepage with featured products and company overview
+- `/about` - About us page with company information
+- `/products` - Product catalog with filtering and search
+- `/products/{product}` - Individual product details
+- `/contact` - Contact page with form and information
 
-### Dashboard Components
-- `WaiterDashboard.vue` - Waiter interface with table management
-- `ReceptionDashboard.vue` - Reception interface with order monitoring
-- `OwnerDashboard.vue` - Super admin analytics and management
-- `KitchenDashboard.vue` - Kitchen order management
+### Admin Routes (Protected)
+- `/admin` - Admin dashboard with analytics
+- `/admin/products` - Product management
+- `/admin/inquiries` - Inquiry management
+- `/admin/categories` - Category management
+- `/admin/suppliers` - Supplier management
 
-### Shared Components
-- `TableLayout.vue` - Visual table layout component
-- `OrderManagement.vue` - Order creation and management
-- `InventoryManagement.vue` - Inventory tracking interface
-- `Login.vue` - Authentication component
+## 🎨 Customization
 
-## 🔄 Real-time Features
+### Styling
+The application uses CSS custom properties for easy theming:
+```css
+:root {
+    --primary-color: #2c5530;
+    --secondary-color: #4a7c59;
+    --accent-color: #f39c12;
+}
+```
 
-The system uses Laravel Reverb for real-time updates:
+### Company Branding
+Update company information in the `company_profiles` table or through the admin panel.
 
-- **Order Updates**: Live order status changes
-- **Table Status**: Real-time table availability
-- **Notifications**: Instant notifications for all roles
-- **Kitchen Communication**: Live order printing and status updates
-
-## 📈 Business Intelligence
-
-### Analytics Dashboard
-- Daily revenue tracking
-- Order volume analysis
-- Table utilization rates
-- Staff performance metrics
-- Popular menu items
-
-### Reporting
-- Sales reports by date range
-- Inventory reports
-- Staff performance reports
-- Customer analytics
+### Product Categories
+Add new categories and subcategories through the database or admin interface.
 
 ## 🔒 Security Features
 
-- Role-based access control
-- API authentication with Sanctum
-- CSRF protection
-- Input validation and sanitization
-- Secure password hashing
+- **Role-based Access Control** - Different user roles with specific permissions
+- **CSRF Protection** - Laravel's built-in CSRF protection
+- **Input Validation** - Comprehensive form validation
+- **SQL Injection Protection** - Laravel Eloquent ORM protection
+- **XSS Protection** - Output escaping and sanitization
+
+## 📈 SEO Features
+
+- **Meta Tags** - Dynamic meta titles, descriptions, and keywords
+- **Structured Data** - Schema markup for better search visibility
+- **Clean URLs** - SEO-friendly URL structure
+- **Sitemap Ready** - Easy to generate XML sitemaps
+- **Mobile Optimization** - Responsive design for mobile SEO
+
+## 🌍 Internationalization Ready
+
+- **Multi-currency Support** - Products can have different currencies
+- **Country-based Filtering** - Filter products by origin country
+- **Global Shipping Information** - International shipping details
+- **Multiple Language Support** - Ready for Laravel localization
 
 ## 🚀 Deployment
 
 ### Production Requirements
-- PHP 8.2+
+- PHP 8.2+ with required extensions
 - MySQL 8.0+ or PostgreSQL
-- Redis (for caching and sessions)
-- Web server (Apache/Nginx)
-- SSL certificate
+- Web server (Apache/Nginx) with URL rewriting
+- SSL certificate for HTTPS
+- Sufficient storage for product images
 
-### Environment Variables
+### Environment Variables for Production
 ```env
 APP_ENV=production
 APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# Database
 DB_CONNECTION=mysql
-BROADCAST_CONNECTION=pusher
+DB_HOST=your_production_host
+DB_DATABASE=your_production_db
+
+# Cache and Sessions
 CACHE_DRIVER=redis
 SESSION_DRIVER=redis
 QUEUE_CONNECTION=redis
+
+# Mail
+MAIL_MAILER=smtp
+# Configure your production mail settings
 ```
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🆘 Support
 
-For support and questions, please open an issue in the repository.
+For support and questions:
+- Create an issue in the repository
+- Contact the development team
+- Check the documentation and FAQ section
+
+## 🎯 Roadmap
+
+Future enhancements planned:
+- [ ] Multi-language support
+- [ ] Advanced reporting and analytics
+- [ ] Email marketing integration
+- [ ] API for mobile app integration
+- [ ] Advanced inventory management
+- [ ] Customer portal with order tracking
+- [ ] Integration with shipping providers
+- [ ] Advanced search with Elasticsearch
 
 ---
 
-**Built with ❤️ using Laravel 11 and Vue.js 3**
+**Built with ❤️ using Laravel 12 and Bootstrap 5**
+
+*This application is designed to help import/export businesses establish a professional online presence and manage their operations efficiently.*
